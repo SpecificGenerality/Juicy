@@ -7,16 +7,20 @@ Created on Sat Nov 11 12:48:34 2017
 class Me:
     def __init(self, name):
         self.name = name
-        self.friends = []
+        self.convos = []
         
-    def addFriend(self, friend):
-        self.friends.append(friend)
+    def addConvo(self, convo):
+        self.convos.append(convo)
         
-    class Convo:
-        def __init__(self, name):
-            self.name = name
-            self.messages = {}
+class Convo:
+    def __init__(self, name):
+        self.name = name
+        self.sent = {}
+        self.received = {}
         
-        def update(self, week, number):
-            self.messages[week] = number
+    def updateSent(self, week):
+        self.sent[week] += 1
+            
+    def updateReceived(self, week):
+        self.received[week] += 1
             
