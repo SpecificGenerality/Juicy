@@ -27,14 +27,31 @@ f=codecs.open("archives/facebook-justinyan33/messages/1558163894202144.html", 'r
 soup = BeautifulSoup(f.read(), 'html.parser')
 title = soup.title.string
 friendName = title[18:]
-prettySoup = soup.prettify()
 listTimes = soup.body.findAll("div", { "class" : "message_header" })
 
+index = codecs.open("archives/facebook-justinyan33/index.htm", 'r', encoding='utf-8')
+soup2 = BeautifulSoup(index.read(), 'html.parser')
+myName = soup2.title.string
+myName = myName[:len(myName)-10]
+
+c = Convo(friendName)
+
 for msg in listTimes:
-	is_me = msg.find("span",{ "class" : "user" }).getText() != friendName
+	is_me = msg.find("span",{ "class" : "user" }).getText() == myName
 	datestr = msg.find("span",{ "class" : "meta" }).getText()
-	date = parser.parse("Tuesday, October 17, 2017 at 6:17pm EDT")
+	date = parser.parse(datestr)
 	timestamp = int(time.mktime(date.timetuple()))
 	week = int(timestamp/(60*60*24*7))*(60*60*24*7)
-	print(week)
+	if is_me:
+		c.updateSent(week)
+	else:
+		c.updateReceived(week)
+
 print("You have talked to " + friendName + " " +str(len(listTimes)) + " times.")
+
+lists = sorted(c.received.items()) # sorted by key, return a list of tuples
+
+x, y = zip(*lists) # unpack a list of pairs into two tuples
+
+plt.plot(x, y)
+plt.show()
