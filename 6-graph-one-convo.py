@@ -28,18 +28,18 @@ class Convo:
 def plotLine(lists):
 	x, y = zip(*lists) # unpack a list of pairs into two tuples
 
-	x_sm = np.array(x)
-	y_sm = np.array(y)
+	# x_sm = np.array(x)
+	# y_sm = np.array(y)
 
-	x_smooth = np.linspace(x_sm.min(), x_sm.max(), 200)
-	y_smooth = spline(x, y, x_smooth)
+	# x_smooth = np.linspace(x_sm.min(), x_sm.max(), 200)
+	# y_smooth = spline(x, y, x_smooth)
 
 	# plt.plot(x, y, 'o', x_smooth, y_smooth, '--')
 	plt.plot(x,y)
 	# plt.plot(x_smooth, y_smooth)
 
             
-f=codecs.open("archives/facebook-justinyan33/messages/1903238506583200.html", 'r', encoding='utf-8')
+f=codecs.open("archives/facebook-justinyan33/messages/1552427911482250.html", 'r', encoding='utf-8')
 
 soup = BeautifulSoup(f.read(), 'html.parser')
 title = soup.title.string
@@ -52,6 +52,7 @@ myName = soup2.title.string
 myName = myName[:len(myName)-10]
 
 c = Convo(friendName)
+print("friend: "+friendName)
 
 for msg in listTimes:
 	is_me = msg.find("span",{ "class" : "user" }).getText() == myName
