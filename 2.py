@@ -7,6 +7,6 @@ title = soup.title.string
 friendName = title[18:]
 prettySoup = soup.prettify()
 listTimes = soup.body.findAll(text = friendName)
-timeStrings = 
+
 print("You have talked to " + friendName + " " +str(len(listTimes)) + " times.")
 print(soup.prettify())
