@@ -11,10 +11,10 @@ listTimes = soup.body.findAll("div", { "class" : "message_header" })
 index = codecs.open("archives/facebook-justinyan33/index.htm", 'r', encoding='utf-8')
 soup2 = BeautifulSoup(index.read(), 'html.parser')
 myName = soup2.title.string
-myName[:len(myName)-10]
+myName = myName[:len(myName)-10]
 
 for msg in listTimes:
-	print(msg.find("span",{ "class" : "user" }).getText(), ": ", msg.find("span",{ "class" : "user" }).getText() == friendName)
+	print(msg.find("span",{ "class" : "user" }).getText(), ": ", msg.find("span",{ "class" : "user" }).getText() == myName)
 	print(msg.find("span",{ "class" : "meta" }).getText())
-print("You have talked to " + friendName + " " +str(len(listTimes)) + " times.")
+print(myName, ": You have talked to " + friendName + " " +str(len(listTimes)) + " times.")
 
