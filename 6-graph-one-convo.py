@@ -3,8 +3,6 @@ import matplotlib.pyplot as plt
 from bs4 import BeautifulSoup
 from dateutil import parser
 import time
-import numpy as np
-from scipy.interpolate import spline
 
 class Convo:
     def __init__(self, name):
