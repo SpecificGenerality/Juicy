@@ -4,6 +4,9 @@ Created on Sat Nov 11 12:48:34 2017
 
 @author: Justin Yan
 """
+
+import matplotlib.pyplot as plt
+
 class Me:
     def __init__(self, name):
         self.name = name
@@ -37,8 +40,16 @@ c = Convo("elsie")
 c.updateSent(0)
 c.updateSent(1)
 c.updateSent(1)
+c.updateSent(3)
 
 myself.addConvo(c)
 
 print(c.sent)
 print(myself.convos)
+
+lists = sorted(c.sent.items()) # sorted by key, return a list of tuples
+
+x, y = zip(*lists) # unpack a list of pairs into two tuples
+
+plt.plot(x, y)
+plt.show()
