@@ -3,6 +3,8 @@ import matplotlib.pyplot as plt
 from bs4 import BeautifulSoup
 from dateutil import parser
 import time
+import numpy as np
+from scipy.interpolate import spline
 
 class Convo:
     def __init__(self, name):
@@ -21,8 +23,23 @@ class Convo:
             self.received[week] += 1
         else:
             self.received[week] = 1
+
+
+def plotLine(lists):
+	x, y = zip(*lists) # unpack a list of pairs into two tuples
+
+	x_sm = np.array(x)
+	y_sm = np.array(y)
+
+	x_smooth = np.linspace(x_sm.min(), x_sm.max(), 200)
+	y_smooth = spline(x, y, x_smooth)
+
+	# plt.plot(x, y, 'o', x_smooth, y_smooth, '--')
+	plt.plot(x,y)
+	# plt.plot(x_smooth, y_smooth)
+
             
-f=codecs.open("archives/facebook-justinyan33/messages/1558163894202144.html", 'r', encoding='utf-8')
+f=codecs.open("archives/facebook-justinyan33/messages/1903238506583200.html", 'r', encoding='utf-8')
 
 soup = BeautifulSoup(f.read(), 'html.parser')
 title = soup.title.string
@@ -41,7 +58,7 @@ for msg in listTimes:
 	datestr = msg.find("span",{ "class" : "meta" }).getText()
 	date = parser.parse(datestr)
 	timestamp = int(time.mktime(date.timetuple()))
-	week = int(timestamp/(60*60*24*7))*(60*60*24*7)
+	week = int(timestamp/(60*60*24))*(60*60*24)
 	if is_me:
 		c.updateSent(week)
 	else:
@@ -49,9 +66,9 @@ for msg in listTimes:
 
 print("You have talked to " + friendName + " " +str(len(listTimes)) + " times.")
 
-lists = sorted(c.received.items()) # sorted by key, return a list of tuples
-
-x, y = zip(*lists) # unpack a list of pairs into two tuples
-
-plt.plot(x, y)
+plotLine(sorted(c.sent.items()))
+plotLine(sorted(c.received.items())) # sorted by key, return a list of tuples
+ax = plt.gca()
+ax.get_xaxis().get_major_formatter().set_scientific(False)
+ax.get_yaxis().get_major_formatter().set_scientific(False)
 plt.show()
