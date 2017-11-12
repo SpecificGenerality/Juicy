@@ -39,7 +39,9 @@ def plotLine(lists):
 	print(x,":",y," ... ")
 	plt.plot(x,y,'--o')
 	# plt.plot(x_smooth, y_smooth)
-
+	plt.title('Conversation History')
+	plt.ylabel('messages')
+	plt.xlabel('time')
             
 fileNum = sys.argv[1]           
 f=codecs.open("archives/facebook-justinyan33/messages/" + fileNum  + ".html", 'r', encoding='utf-8')
