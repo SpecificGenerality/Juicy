@@ -1,4 +1,5 @@
 import codecs
+import sys
 import matplotlib.pyplot as plt
 from bs4 import BeautifulSoup
 from dateutil import parser
@@ -40,7 +41,8 @@ def plotLine(lists):
 	# plt.plot(x_smooth, y_smooth)
 
             
-f=codecs.open("archives/facebook-justinyan33/messages/1604179209600612.html", 'r', encoding='utf-8')
+fileNum = sys.argv[1]           
+f=codecs.open("archives/facebook-justinyan33/messages/" + fileNum  + ".html", 'r', encoding='utf-8')
 
 soup = BeautifulSoup(f.read(), 'html.parser')
 title = soup.title.string
@@ -60,7 +62,7 @@ for msg in listTimes:
 	datestr = msg.find("span",{ "class" : "meta" }).getText()
 	date = parser.parse(datestr)
 	timestamp = int(time.mktime(date.timetuple()))
-	week = int(timestamp/(60*60))*(60*60)
+	week = int(timestamp/(60*60*24*2))*(60*60*24*2)
 	if is_me:
 		c.updateSent(week)
 	else:
