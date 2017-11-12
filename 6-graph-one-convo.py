@@ -24,7 +24,7 @@ class Convo:
             self.received[week] = 1
 
 
-def plotLine(lists):
+def plotLine(lists, name):
 	if len(lists) == 0:
 		return
 	x, y = zip(*lists) # unpack a list of pairs into two tuples
@@ -37,11 +37,9 @@ def plotLine(lists):
 
 	# plt.plot(x, y, 'o', x_smooth, y_smooth, '--')
 	print(x,":",y," ... ")
-	plt.plot(x,y,'--o')
+	plt.plot(x,y,'--o',  label = name)
 	# plt.plot(x_smooth, y_smooth)
-	plt.title('Conversation History')
-	plt.ylabel('messages')
-	plt.xlabel('time')
+
             
 fileNum = sys.argv[1]           
 f=codecs.open("archives/facebook-justinyan33/messages/" + fileNum  + ".html", 'r', encoding='utf-8')
@@ -72,7 +70,11 @@ for msg in listTimes:
 
 print("You have talked to " + friendName + " " +str(len(listTimes)) + " times.")
 print("sent: ",	c.sent,", received: ",c.received)
-plotLine(sorted(c.sent.items()))
-plotLine(sorted(c.received.items())) # sorted by key, return a list of tuples
+plotLine(sorted(c.sent.items()), myName)
+plotLine(sorted(c.received.items()), friendName) # sorted by key, return a list of tuples
+plt.title('Conversation History')
+plt.ylabel('messages')
+plt.xlabel('time')
+plt.legend(loc='upper right')
 ax = plt.gca()
 plt.show()
