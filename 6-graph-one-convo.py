@@ -24,6 +24,8 @@ class Convo:
 
 
 def plotLine(lists):
+	if len(lists) == 0:
+		return
 	x, y = zip(*lists) # unpack a list of pairs into two tuples
 
 	# x_sm = np.array(x)
@@ -33,11 +35,12 @@ def plotLine(lists):
 	# y_smooth = spline(x, y, x_smooth)
 
 	# plt.plot(x, y, 'o', x_smooth, y_smooth, '--')
-	plt.plot(x,y)
+	print(x,":",y," ... ")
+	plt.plot(x,y,'--o')
 	# plt.plot(x_smooth, y_smooth)
 
             
-f=codecs.open("archives/facebook-justinyan33/messages/1552427911482250.html", 'r', encoding='utf-8')
+f=codecs.open("archives/facebook-justinyan33/messages/1604179209600612.html", 'r', encoding='utf-8')
 
 soup = BeautifulSoup(f.read(), 'html.parser')
 title = soup.title.string
@@ -57,17 +60,15 @@ for msg in listTimes:
 	datestr = msg.find("span",{ "class" : "meta" }).getText()
 	date = parser.parse(datestr)
 	timestamp = int(time.mktime(date.timetuple()))
-	week = int(timestamp/(60*60*24))*(60*60*24)
+	week = int(timestamp/(60*60))*(60*60)
 	if is_me:
 		c.updateSent(week)
 	else:
 		c.updateReceived(week)
 
 print("You have talked to " + friendName + " " +str(len(listTimes)) + " times.")
-
+print("sent: ",	c.sent,", received: ",c.received)
 plotLine(sorted(c.sent.items()))
 plotLine(sorted(c.received.items())) # sorted by key, return a list of tuples
 ax = plt.gca()
-ax.get_xaxis().get_major_formatter().set_scientific(False)
-ax.get_yaxis().get_major_formatter().set_scientific(False)
 plt.show()
