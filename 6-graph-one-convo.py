@@ -1,4 +1,5 @@
 import codecs
+import sys
 import matplotlib.pyplot as plt
 from bs4 import BeautifulSoup
 from dateutil import parser
@@ -36,8 +37,8 @@ def plotLine(lists):
 	plt.plot(x,y)
 	# plt.plot(x_smooth, y_smooth)
 
-            
-f=codecs.open("archives/facebook-justinyan33/messages/1552427911482250.html", 'r', encoding='utf-8')
+fileNum = sys.argv[1]           
+f=codecs.open("archives/facebook-justinyan33/messages/" + fileNum  + ".html", 'r', encoding='utf-8')
 
 soup = BeautifulSoup(f.read(), 'html.parser')
 title = soup.title.string
